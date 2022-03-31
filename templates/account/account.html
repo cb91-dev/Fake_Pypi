@@ -1,0 +1,24 @@
+{% extends 'shared/layout.html'%}
+
+{% block header %}
+<div>
+    <h1>{% block title %}Account{% endblock %}</h1>
+    <div>
+        {%block list%}
+        <h5>{{ data.sport }}</h5>
+        {%for key in data %}
+        <div>{{ key }}</div>
+        {% endfor %}
+        {%endblock%}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<ul>
+    <li>this</li>
+    <li>uvicorn</li>
+    <li>jinja</li>
+</ul>
+{% endblock %}
