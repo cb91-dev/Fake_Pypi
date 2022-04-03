@@ -1,4 +1,4 @@
-import re
+
 import fastapi
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
@@ -14,7 +14,6 @@ templates = Jinja2Templates(directory='templates')
 def index(request:Request):
     vm = IndexViewModel(request)
     context = vm.to_dict()
-    print(context)
     return templates.TemplateResponse('home/index.html',{"request":request,"data":context})
 
 
@@ -23,6 +22,5 @@ def index(request:Request):
 
 def about(request:Request):
     vm = ViewModelBase(request)
-    context = vm.to_dict()
-    print(context)
+    context = vm.to_dict() 
     return templates.TemplateResponse('home/index.html',{"request":request,"data":context})
