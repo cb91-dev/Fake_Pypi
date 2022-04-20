@@ -19,7 +19,7 @@ class DetailsViewModel(ViewModelBase):
         self.latest_version = "0.0.0"
         self.is_latest = True
         self.maintainers = []
-
+        print(self.package.summary)
         if not self.package or not self.latest_release:
             return
 

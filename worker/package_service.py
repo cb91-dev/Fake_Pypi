@@ -26,10 +26,10 @@ def latest_releases(limit:int=5) -> List:
     
 
 #  Returning get_package_by_id from DB
-def get_package_by_id(package_name:str) -> Optional[Package]:
+def get_package_by_id(package_name: str) -> Optional[Package]:
     package = Package(
-        package_name,"This is the summary", "Full details here!",
-        "https://fastapi.tiangolo.com/","MIT","Craig Sexypants Bennett"
+        package_name, "This is the summary", "Full details here!",
+        "https://fastapi.tiangolo.com/", "MIT", "Sebastián Ramírez"
     )
     return package
 

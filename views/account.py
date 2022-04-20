@@ -14,20 +14,35 @@ templates = Jinja2Templates(directory='templates')
 def index(request:Request):
     vm = AccountViewModel(request)
     context = vm.to_dict()
-    return templates.TemplateResponse('home/index.html',{"request":request,"data":context})
+    return templates.TemplateResponse('account/index.html',{"request":request,"data":context})
 
 @router.get('/account/register')
 def regsiter(request:Request):
     vm = RegisterViewModel(request)
     context = vm.to_dict()
-    return templates.TemplateResponse('home/index.html',{"request":request,"data":context})
+    return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
+
+@router.post('/account/register')
+async def register(request:Request):
+        vm = RegisterViewModel(request)
+        print(request)
+        await vm.load()
+        # if vm.error:
+        #     context = vm.to_dict()
+        #     return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
+        print("redirct")
+        context = vm.to_dict()
+        return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
+        
+
 
 @router.get('/account/login')
 def login(request:Request):
     vm = LoginViewModel(request)
     context = vm.to_dict()
-    return templates.TemplateResponse('home/index.html',{"request":request,"data":context})
+    return templates.TemplateResponse('account/login.html',{"request":request,"data":context})
 
 @router.get('/account/logout')
 def logout(request:Request):
     return {}
+

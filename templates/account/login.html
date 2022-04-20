@@ -1,0 +1,17 @@
+{% extends 'shared/layout.html'%}
+{% block content %}
+<div class="page-core form-block">
+    <div class="form-container">
+        <form action="" method="POST" class="account-form">
+            <h1>Login to PyPI</h1>
+
+            <input name="email" type="text" placeholder=" Your email address" class="form-control" value="${ email }">
+            <input name="password" type="password" placeholder=" Password" class="form-control" value="${ password }">
+            <button type="submit" class="btn btn-danger">Log In</button>
+            <div style="clear: both;"></div>
+
+            <div class="error-msg" tal:condition="error">ERRO HERE</div>
+        </form>
+    </div>
+</div>
+{% endblock %}

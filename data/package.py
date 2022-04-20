@@ -7,7 +7,7 @@ class Package:
                  home_page: str,
                  lic: str,
                  author_name: str,
-                 maintainers: list = None,
+                 maintainers: list =[1,2],
                  ):
         if maintainers is None:
             maintainers = []

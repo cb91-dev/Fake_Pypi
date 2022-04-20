@@ -8,6 +8,7 @@ uvicorn = "*"
 fastapi = "*"
 jinja2 = "*"
 aiofiles = "*"
+python-multipart = "*"
 
 
 [dev-packages]
