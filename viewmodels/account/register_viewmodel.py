@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import Request
+from starlette.requests import Request
 
 from viewmodels.shared.viewmodel_base import ViewModelBase
 
@@ -8,14 +8,13 @@ from viewmodels.shared.viewmodel_base import ViewModelBase
 class RegisterViewModel(ViewModelBase):
     def __init__(self, request: Request):
         super().__init__(request)
+
         self.name: Optional[str] = None
         self.password: Optional[str] = None
         self.email: Optional[str] = None
-        
-        
+
     async def load(self):
-        
-        form = await self.request.form(self)
+        form = await self.request.form()
         self.name = form.get('name')
         self.password = form.get('password')
         self.email = form.get('email')

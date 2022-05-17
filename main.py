@@ -1,9 +1,9 @@
 
 import uvicorn
 from fastapi import FastAPI
-from views import home
-from views import account
-from views import packages
+from routes import home
+from routes import account
+from routes import packages
 from fastapi.staticfiles import StaticFiles
 
 

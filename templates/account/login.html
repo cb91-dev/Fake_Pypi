@@ -10,7 +10,9 @@
             <button type="submit" class="btn btn-danger">Log In</button>
             <div style="clear: both;"></div>
 
-            <div class="error-msg" tal:condition="error">ERRO HERE</div>
+            {% if data.error %}
+            <p class="error-msg">{{ data.error }}</p>
+            {% endif %}
         </form>
     </div>
 </div>
