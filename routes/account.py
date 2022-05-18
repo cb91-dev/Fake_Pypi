@@ -44,7 +44,9 @@ async def register(request:Request):
         
         response = fastapi.responses.RedirectResponse(url='/account', status_code=status.HTTP_302_FOUND)
         print(cookie_auth)
-        cookie_auth.set_auth(response, account.id)
+        auth_key = 'pypi_account'
+        response.set_cookie(auth_key, account.id,secure=False,httponly=True)
+        # cookie_auth.set_auth(response, account.id)
         return response
         
 
