@@ -13,6 +13,9 @@ router = fastapi.APIRouter()
 
 templates = Jinja2Templates(directory='templates')
 
+
+
+# index account
 @router.get('/account',response_class=HTMLResponse)
 
 def index(request:Request):
@@ -20,44 +23,62 @@ def index(request:Request):
     context = vm.to_dict()
     return templates.TemplateResponse('account/index.html',{"request":request,"data":context})
 
+# REGISTER FUNCTIONS !!!!!!!!!!!!!!!!!!
+@router.post('/account/register')
+async def register(request:Request):
+        vm = RegisterViewModel(request)
+        await vm.load()
+        print(vm.error)
+        #invalid inputs from user handled here
+        if vm.error:
+            context = vm.to_dict()
+            return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
+        
+        # Making user account
+        account = user_service.create_account(vm.name, vm.email, vm.password)
+        # Login user 
+        response = fastapi.responses.RedirectResponse(url='/account', status_code=status.HTTP_302_FOUND)
+        cookie_auth.set_auth(response, account.id)
+        return response
+    
 @router.get('/account/register')
 def regsiter(request:Request):
     vm = RegisterViewModel(request)
     context = vm.to_dict()
     return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
-
+        
 
 # LOGIN FUNCTIONS !!!!!!!!!!!!!!!!!!
-# Taking a register of new users
-@router.post('/account/register')
+@router.post('/account/login')
 async def register(request:Request):
-        vm = RegisterViewModel(request)
-        print(request)
+        vm = LoginViewModel(request)
         await vm.load()
-        
-        #invalid inputs from user handled here
+        # invalid inputs from user handled here
         if vm.error:
             context = vm.to_dict()
-            return templates.TemplateResponse('account/register.html',{"request":request,"data":context})
-        #making user account
-        account = user_service.create_account(vm.name, vm.email, vm.password)
-        
+            return templates.TemplateResponse('account/login.html',{"request":request,"data":context})
+        # log user in
+        user = user_service.login_user(vm.email, vm.password)
+        # if no user has no account or worng password
+        if not user:
+            vm.error = "The account doesn't exist or the password or wrong."
+            print(vm.error)
         response = fastapi.responses.RedirectResponse(url='/account', status_code=status.HTTP_302_FOUND)
-        print(cookie_auth)
-        auth_key = 'pypi_account'
-        response.set_cookie(auth_key, account.id,secure=False,httponly=True)
-        # cookie_auth.set_auth(response, account.id)
+        cookie_auth.set_auth(response, user.id)
         return response
-        
 
-# GETTING PAGE FOR LOGIN
 @router.get('/account/login')
 def login(request:Request):
     vm = LoginViewModel(request)
     context = vm.to_dict()
     return templates.TemplateResponse('account/login.html',{"request":request,"data":context})
 
+
+# LOGOUT FUNCTION !!!!!!!!!!!!!!!!!!
 @router.get('/account/logout')
 def logout(request:Request):
-    return {}
+    response = fastapi.responses.RedirectResponse(url='/',status_code=status.HTTP_302_FOUND)
+    cookie_auth.logout(response)
+    return response
+
 

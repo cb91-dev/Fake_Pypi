@@ -9,7 +9,13 @@ fastapi = "*"
 jinja2 = "*"
 aiofiles = "*"
 python-multipart = "*"
-
+sqlalchemy = "*"
+passlib = "*"
+sha512-crypt = "*"
+progressbar = "*"
+python-dateutil = "*"
+progressbar2 = "*"
+aiosqlite = "*"
 
 [dev-packages]
 

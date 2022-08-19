@@ -10,9 +10,9 @@ class ViewModelBase:
     def __init__(self, request: Request):
         self.request: Request = request
         self.error: Optional[str] = None
-        self.user_id: Optional[int] = None
+        self.user_id: Optional[int] = cookie_auth.get_user_id_from_auth_cookie(self.request)
 
-        # We'll get this once we have users from the cookies.
+        #  Getting cookie from cookie auth
         self.is_logged_in = cookie_auth.get_user_id_from_auth_cookie(self.request)
 
     def to_dict(self) -> dict:

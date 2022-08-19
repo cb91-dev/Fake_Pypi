@@ -1,3 +1,5 @@
+from importlib.resources import Package
+from struct import pack
 import fastapi
 from fastapi.templating import Jinja2Templates
 router = fastapi.APIRouter()
@@ -10,7 +12,8 @@ from viewmodels.packages.details_viewmodel import DetailsViewModel
 def details(package_name: str, request: Request):
     vm = DetailsViewModel(package_name,request)
     details = vm.to_dict()
-    return templates.TemplateResponse('packages/details.html',{"request":request,"package":details})
+    print(details)
+    return templates.TemplateResponse('packages/details.html',{"request":request,"data":details})
  
  
 

@@ -43,7 +43,7 @@
 
 .latest-release-date {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: normal;
   font-style: italic;
 }
@@ -67,7 +67,7 @@ h3 {
 .nav-sidebar-section a {
   display: block;
   padding: 10px;
-  font-size: 15px;
+  font-size: 18px;
   color: #2b6ca8;
 }
 

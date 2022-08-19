@@ -5,20 +5,39 @@
         <form action="" method="POST" class="account-form">
             <h1>Register at PyPI</h1>
 
+            {% if data.name %}
             <input name="name" type="text" placeholder="Your name" class="form-control" value={{ data.name }}>
+            {% else %}
+            <input name="name" type="text" placeholder="Your name" class="form-control">
+            {% endif %}
+
+
+
+            {% if data.email %}
             <input name="email" type="email" placeholder="Your email address" class="form-control"
                 value={{ data.email }}>
+            {% else %}
+            <input name="email" type="email" placeholder="Your email address" class="form-control">
+            {% endif %}
+
+            {% if data.password %}
             <input name="password" minlength="5" type="password" placeholder="Password" class="form-control"
                 value={{ data.password }}>
+            {% else %}
+            <input name="password" minlength="5" type="password" placeholder="Password" class="form-control">
+            {% endif %}
+
+
             <input name="age" type="number" min="18" max="120" placeholder=" Your age in years"
                 style="display: block; width: 100%">
             <button type="submit" class="btn btn-danger">Register</button>
+
+            <!-- Error display -->
             <div style="clear: both;"></div>
             {% if data.error %}
             <p class="error-msg">{{ data.error }}</p>
             {% endif %}
 
-            <!-- <div class="error-msg" tal:condition="error">{{ data.error }}</div> -->
         </form>
     </div>
 </div>

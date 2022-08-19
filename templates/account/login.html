@@ -4,12 +4,24 @@
     <div class="form-container">
         <form action="" method="POST" class="account-form">
             <h1>Login to PyPI</h1>
+            {% if data.email%}
+            <input name="email" type="text" placeholder=" Your email address" class="form-control"
+                value={{ data.email }}>
+            {%else%}
+            <input name="email" type="text" placeholder=" Your email address" class="form-control">
+            {%endif%}
 
-            <input name="email" type="text" placeholder=" Your email address" class="form-control" value="${ email }">
-            <input name="password" type="password" placeholder=" Password" class="form-control" value="${ password }">
+            {% if data.password %}
+            <input name="password" type="password" placeholder=" Password" class="form-control"
+                value={{ data.password }}>
+            {% else %}
+            <input name="password" type="password" placeholder=" Password" class="form-control">
+            {% endif %}
+
+
             <button type="submit" class="btn btn-danger">Log In</button>
             <div style="clear: both;"></div>
-
+            <!-- Error display -->
             {% if data.error %}
             <p class="error-msg">{{ data.error }}</p>
             {% endif %}

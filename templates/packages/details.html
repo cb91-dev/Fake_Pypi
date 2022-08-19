@@ -1,136 +1,143 @@
-{% extends 'shared/layout.html'%}
+ {% extends 'shared/layout.html'%}
 
-{% block content %}
-<div class="content details bg-white">
+ {% block content %}
+ <div class="content details bg-white">
 
-    <div class="hero">
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-8">
-                <h1>
-                    {{ package.package_name }} {{ package.latest_version }}
-                </h1>
+     <div class="hero">
+         <div class="row">
+             <div class="col-sm-1"></div>
+             <div class="col-sm-8">
+                 <h1>
+                     {{ data.package_name }} {{ data.latest_version }}
+                 </h1>
 
-                <div class="install sub-hero">
-                    pip install
-                    {{ package.package_name }}
-                </div>
-            </div>
-
-            <div class="col-sm-2 active-release">
-                <div class="go-latest-button">
-                    Latest version
-                </div>
-                <div class="py-2"></div>
-                <div class=" go-older-button">
-                    <a href="/project/{{ package.package_name }}">
-                        Newer version available
-                    </a>
-                </div>
-                <div class=" latest-release-date">
-                    Last release:
-                    <span>
-                        {{ package.latest_release.created_date.date().isoformat() }}
-                    </span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row pypi-stats">
-        <div class="col-sm-1"></div>
-        <div class="text-center col-sm-10">
-            {{package.package.summary}}
-        </div>
-    </div>
-
-    <div class="project-list container">
-        <div class="row">
-            <div class="col-sm-3 nav-sidebar-section">
+                 <div class="install sub-hero">
+                     pip install
+                     {{ data.package_name }}
+                 </div>
+             </div>
 
 
-                <h3>Navigation</h3>
-                <a href="/project/{{ package.package_name }}">
-                    <i class="fa fa-align-left" aria-hidden="true"></i>
-                    Project description
-                </a><br>
-                <a href="#">
-                    <i class="fa fa-history" aria-hidden="true"></i>
-                    Release history
-                </a><br>
-                <a href="#">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    Download files
-                </a>
-                <hr>
+
+             <div class="col-sm-2 active-release">
+                 {% if data.is_latest is sameas true %}
+                 <div class="go-latest-button">
+                     Latest version
+                 </div>
+                 {%else%}
+                 <div class="go-older-button">
+                     <a href="/project/{{ data.package_name }}">
+                         Newer version available
+                     </a>
+                 </div>
+                 {% endif %}
+                 <div class="latest-release-date">
+                     <p>Last release:
+                         <span>
+                             {{ data.latest_version }}
+                         </span>
+                     </p>
+                 </div>
+             </div>
+         </div>
+
+     </div>
+
+     <div class="row pypi-stats">
+         <div class="col-sm-1"></div>
+         <div class="text-center col-sm-10">
+             {{ data.package.summary }}
+         </div>
+     </div>
+
+     <div class="project-list container">
+         <div class="row">
+             <div class="col-sm-3 nav-sidebar-section">
 
 
-                <h3>Project links</h3>
-                <a href="{{ package.home_page }}">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    Homepage
-                </a>
-                <hr>
+                 <h2>Navigation</h2>
+                 <a href="/project/{{ data.package_name }}">
+                     <i class="fa fa-align-left" aria-hidden="true"></i>
+                     Project description
+                 </a><br>
+                 <a href="#">
+                     <i class="fa fa-history" aria-hidden="true"></i>
+                     Release history
+                 </a><br>
+                 <a href="#">
+                     <i class="fa fa-download" aria-hidden="true"></i>
+                     Download files
+                 </a>
+                 <hr>
 
 
-                <h3>Statistics</h3>
-
-                <p>View statistics for this project via
-                    <a class="link-inline" href="https://libraries.io/pypi/{{ package.package_name }}">Libraries.io</a>,
-                    or by using
-                    <a class="link-inline"
-                        href="https://packaging.python.org/guides/analyzing-pypi-package-downloads/">Google
-                        BigQuery</a>
-                </p>
-                <hr>
+                 <h2>Project links</h2>
+                 <a href="{{ data.package.home_page }}">
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                     Homepage
+                 </a>
+                 <hr>
 
 
-                <h3>Meta</h3>
-                <div class="meta-topic">
-                    <span>License</span>: {{ package.package.license }}
-                </div>
-                {%if package.package.author_name%}
-                <div>
-                    <span>Author</span>: {{ package.package.author_name }}
-                </div>
-                {% endif%}
-                <hr>
+                 <h2>Statistics</h2>
+
+                 <p>View statistics for this project via
+                     <a class="link-inline" href="https://libraries.io/pypi/{{ data.package_name }}">Libraries.io</a>,
+                     or by using
+                     <a class="link-inline"
+                         href="https://packaging.python.org/guides/analyzing-pypi-package-downloads/">Google
+                         BigQuery</a>
+                 </p>
+                 <hr>
 
 
-                <h3>Maintainers</h3>
-                {%for m in package.maintainers%}
-                <div class="maintainer">
-
-                    <img src="{{ m.profile_image_url }}" alt="">
-                    <a href="#">{{ package.package.maintainers }}</a>
-                </div>
-                {% endfor %}
-                <hr>
-                <h3>License</h3>
-                <div class="license">
-                    {{ package.package.license }}
-                </div>
-
-            </div>
-            <div class="col-sm-7 pt-2">
-
-                <h2>Project description</h2>
-
-                <pre>{{package.package.description}}
-            </pre>
+                 <h2>Meta</h2>
+                 <div class="meta-topic">
+                     <span>License</span>: {{ data.package.license }}
+                 </div>
+                 {%if data.package.author_name%}
+                 <div>
+                     <span>Author</span>: {{ data.package.author_name }}
+                 </div>
+                 {% endif%}
+                 <hr>
 
 
-            </div>
-            <div class="col-sm-1"></div>
-        </div>
-    </div>
+                 <h2>Maintainers</h2>
+                 {%for m in data.maintainers%}
+                 <div class="maintainer">
 
-</div>
-</div>
+                     <img src="{{ m.profile_image_url }}" alt="">
+                     <a href="#">{{ data.maintainers }}</a>
+                 </div>
+                 {% endfor %}
+                 <hr>
+                 <h2>License</h2>
+                 <div class="license">
+                     {{ data.package.license }}
+                 </div>
 
-<div>
-    <link rel="stylesheet" href="/static/css/package.css">
-</div>
-</div>
-{% endblock %}
+             </div>
+             <div class="col-sm-7 pt-2">
+
+                 <h2>Project description</h2>
+
+                 <pre>{{data.package.description}}
+                 </pre>
+
+
+             </div>
+             <div class="col-sm-1"></div>
+         </div>
+     </div>
+
+ </div>
+ </div>
+
+ <div>
+     <link rel="stylesheet" href="/static/css/package.css">
+ </div>
+ </div>
+
+
+ {% endblock %}
